@@ -10,7 +10,7 @@ import { AboutModule } from './about/about.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true, // Makes .env variables accessible globally
-      envFilePath: '.env', // Path to the .env file
+      envFilePath: '.env',
     }),
     DatabaseModule,
     ProjectsModule,
