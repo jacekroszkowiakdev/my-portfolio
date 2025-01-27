@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProjectEntity } from './projects.entity/projects.entity';
+import { CreateProjectDto } from './projects.dto/create-project.dto/create-project.dto';
+import { UpdateProjectDto } from './projects.dto/update-project.dto/update-project.dto';
 
 @Injectable()
 export class ProjectsService {
@@ -9,6 +11,11 @@ export class ProjectsService {
     @InjectRepository(ProjectEntity)
     private readonly projectRepository: Repository<ProjectEntity>,
   ) {}
+  create(createProjectDto: CreateProjectDto) {
+    const project = this.projectRepository.create(createProjectDto);
+    return this.projectRepository.save(project);
+  }
+
   findAll() {
     return this.projectRepository.find();
   }
@@ -17,12 +24,8 @@ export class ProjectsService {
     return this.projectRepository.findOne({ where: { id } });
   }
 
-  create(project: Partial<ProjectEntity>) {
-    return this.projectRepository.save(project);
-  }
-
-  update(id: number, project: Partial<ProjectEntity>) {
-    return this.projectRepository.update(id, project);
+  update(id: number, updateProjectDto: UpdateProjectDto) {
+    return this.projectRepository.update(id, updateProjectDto);
   }
 
   delete(id: number) {
